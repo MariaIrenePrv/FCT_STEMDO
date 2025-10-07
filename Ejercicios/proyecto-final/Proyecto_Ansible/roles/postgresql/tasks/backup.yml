@@ -1,0 +1,21 @@
+- name: Crear carpeta de backups
+  file:
+    path: "{{ backup_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Hacer dump de la BBDD
+  become_user: postgres
+  shell: pg_dump {{ db_name }} > {{ backup_dir }}/backup.sql
+  args:
+    executable: /bin/bash
+
+- name: Verificar que el dump existe
+  stat:
+    path: "{{ backup_dir }}/backup.sql"
+  register: backup_file
+
+- name: Confirmar éxito
+  debug:
+    msg: "Backup creado en {{ backup_dir }}/backup.sql"
+  when: backup_file.stat.exists

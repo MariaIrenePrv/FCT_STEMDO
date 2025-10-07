@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    image: mariairenepirvu/gestion-recursos-backmip:latest # Imagen del backend en Docker Hub
+    ports:
+      - "8080:8080" # Expone el puerto 8080 del contenedor al puerto 8080 del host
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://137.117.194.84:5432/proyecto_final # URL de la base de datos
+      SPRING_DATASOURCE_USERNAME: root # Usuario de la base de datos
+      SPRING_DATASOURCE_PASSWORD: password # Contraseña de la base de datos
+    networks:
+      - app-network # Red de redes en la que se encuentra el contenedor
+
+  frontend:
+    image: mariairenepirvu/gestion-recursos-frontmip:latest # Imagen del frontend en Docker Hub
+    container_name: rrhh-frontend
+    ports:
+      - "80:80" # Expone el puerto 80 del contenedor al puerto 80 del host
+    depends_on: # Dependencia del frontend con el backend
+      - backend # Imagen del backend en Docker Hub
+    networks:
+      - app-network # Red de redes en la que se encuentra el contenedor
+
+networks:
+  app-network:
+    driver: bridge # Driver de la red de redes

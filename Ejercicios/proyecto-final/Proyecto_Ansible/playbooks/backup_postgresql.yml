@@ -1,0 +1,7 @@
+- name: Realizar backup de PostgreSQL en VM privada
+  hosts: bbdd
+  become: yes
+  tasks:
+    - include_role:
+        name: postgresql
+        tasks_from: backup

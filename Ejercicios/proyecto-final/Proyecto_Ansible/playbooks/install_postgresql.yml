@@ -1,0 +1,6 @@
+- name: Instalar PostgreSQL en VM privada
+  hosts: bbdd
+  become: yes
+  roles:
+    - role: postgresql
+      tasks_from: install 

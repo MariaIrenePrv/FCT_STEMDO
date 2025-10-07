@@ -1,0 +1,17 @@
+image:
+  repository: acrjgarcia123.azurecr.io/proyecto-backend
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+env:
+  SPRING_DB_HOST: host
+  SPRING_DB_PORT: "5432"
+  SPRING_DB_NAME: mydb
+  SPRING_DB_USER: user
+  SPRING_DB_PASSWORD: password
+
+resources: {}
