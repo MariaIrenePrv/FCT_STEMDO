@@ -1,0 +1,15 @@
+# Nombre del workflow
+name: Secreto 
+
+# Evento para lanzar el Workflow manualmente
+on:
+  workflow_dispatch:
+
+jobs:
+  tareas:
+    runs-on: labs-runner # Runner de Stemdo
+    steps:
+      - name: Muestro el secreto 
+        run: echo "Mi secreto es $MY_SECRET"
+        env:
+          MY_SECRET: ${{ secrets.MY_SECRET }}

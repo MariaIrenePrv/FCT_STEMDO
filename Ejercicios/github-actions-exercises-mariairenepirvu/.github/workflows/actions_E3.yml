@@ -1,0 +1,38 @@
+# Nombre del workflow
+name: Subir y descargar artefacto
+
+# Evento para lanzar el Workflow manualmente
+on:
+  workflow_dispatch:
+
+# Jobs a ejecutar
+jobs:
+  # Subir archivo como artefacto 
+  subir:
+    runs-on: ubuntu-latest  # Runner de Ubuntu
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+  
+      - name: Mostrar el archivo 
+        run: ls -l archivo.txt
+
+      - name: Subir archivo como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: archivo_subido
+          path: archivo.txt
+          
+  # Descargar archivo y mostrar su contenido
+  descargar:
+    needs: subir  # Este depende de "Subir"
+    runs-on: ubuntu-latest # Runner de Ubuntu
+    steps:
+      - name: Descargar artefacto
+        uses: actions/download-artifact@v4
+        with:
+          name: archivo_subido
+          path: ./
+
+      - name: Mostrar contenido archivo
+        run: cat archivo.txt

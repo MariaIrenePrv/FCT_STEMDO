@@ -1,0 +1,27 @@
+# Nombre del workflow
+name: Confirmacion
+
+# Evento para lanzar el Workflow de forma manual 
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: '¿Quieres ver el mensaje? (true o false)' # Pregunta con respuesta true o false
+        required: true # Campo obligatorio
+        type: choice # Tipo de input para listar opciones   
+        options:
+            - true 
+            - false
+
+# Job a ejecutar 
+jobs:
+  confirmacion:
+    runs-on: labs-runner # Runner de Stemdo
+    steps:
+      - name: Confirmación # Nombre de la accion 
+        run: | # Script Bash. Comprueba si se pasa True o False y lanza el mensaje. 
+          if [ "${{ inputs.confirm }}" = "true" ]; then 
+            echo "El mensaje es -> Valar Morghulis"
+          else 
+            echo " "
+          fi

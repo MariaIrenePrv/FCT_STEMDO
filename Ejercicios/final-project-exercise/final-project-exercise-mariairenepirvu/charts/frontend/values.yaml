@@ -1,0 +1,10 @@
+image:
+  repository: mariairenepirvu/gestion-recursos-frontmip
+  tag: latest
+  pullPolicy: IfNotPresent
+ 
+service:
+  type: LoadBalancer
+  port: 80
+ 
+resources: {}

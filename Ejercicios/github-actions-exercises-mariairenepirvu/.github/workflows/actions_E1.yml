@@ -1,0 +1,23 @@
+# Nombre del workflow
+name: Action Archivo 
+
+# Evento para lanzar el Workflow manualmente
+on:
+  workflow_dispatch:
+
+# Jobs a ejecutar
+jobs:
+  action_arch:
+    runs-on: ubuntu-latest  # Runner de Ubuntu
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+  
+      - name: Ejecutar action personalizada
+        uses: ./.github/actions/action1
+        with:
+          mensaje: "Esta es la action personaliza"
+      
+      - name: Verificar contenido del archivo
+        run: cat mensaje.txt
+  

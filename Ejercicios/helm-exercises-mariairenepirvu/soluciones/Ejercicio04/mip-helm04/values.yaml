@@ -1,0 +1,16 @@
+mysql:
+  image: bitnami/mysql:8.0
+  storageClass: standard
+  storage: 5Gi
+
+  rootPassword: mip-mysql
+  database: app
+  user: Irene 
+  password: mip-mysql
+
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin:latest
+  nodePort: 31008
+  config:
+      PMA_HOST: mip-helm04-mysql
+      PMA_PORT: "3306"

@@ -1,0 +1,40 @@
+#############
+# DEPLOYMENT  
+#############
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: colors
+spec:
+  selector:   #permite seleccionar un conjunto de objetos que cumplan las condicione
+    matchLabels:
+      app: colors-app
+  replicas: 3 # Indica al controlador que ejecute 3 pods
+  template:   # Plantilla que define los containers
+    metadata:
+      labels:
+        app: colors-app
+    spec:
+      containers:
+      - name: coloread
+        image: noloknolo/colors:v1
+        ports:
+        - containerPort: 8080
+---
+
+#############
+# SERVICIO  
+#############
+apiVersion: v1
+kind: Service
+metadata:
+  name: colors-service
+  labels: 
+     app: colors-app
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080 
+    protocol: TCP
+  selector:
+    app: colors-app

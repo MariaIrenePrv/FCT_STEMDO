@@ -1,0 +1,13 @@
+# Configuración de autenticación de clientes de PostgreSQL
+
+# "local" es solo para conexiones en la misma máquina (por ejemplo, usando sockets de Unix)
+local   all             all                                     peer
+
+# Permite conexiones IPv4 desde localhost (127.0.0.1) con autenticación md5 (usuario/contraseña)
+host    all             all             127.0.0.1/32            md5
+
+# Permite conexiones IPv6 desde localhost (::1) con autenticación md5
+host    all             all             ::1/128                 md5
+
+# Permite conexiones únicamente desde la IP del backend, usando autenticación md5
+host    all             all             {{ backend_ip }}/32     md5

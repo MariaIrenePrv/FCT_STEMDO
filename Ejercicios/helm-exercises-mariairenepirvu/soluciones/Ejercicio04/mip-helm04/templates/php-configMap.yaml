@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: php-configmap
+  namespace: {{ .Release.Namespace }}
+data:
+  PMA_HOST: {{ .Values.phpmyadmin.config.PMA_HOST }}
+  PMA_PORT: "{{ .Values.phpmyadmin.config.PMA_PORT }}"

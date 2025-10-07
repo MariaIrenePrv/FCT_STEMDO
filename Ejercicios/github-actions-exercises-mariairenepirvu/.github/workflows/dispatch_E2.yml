@@ -1,0 +1,23 @@
+# Nombre del workflow
+name: Entornos
+
+# Evento para lanzar el Workflow manualmente
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Selecciona el entorno'  # Descripción del input que se muestra 
+        required: true # Campo obligatorio
+        type: choice # Tipo de input para elegir entre varias opciones
+        options:
+          - Production 
+          - Staging    
+
+# Job a ejecutar
+jobs:
+  entornos:
+    runs-on: labs-runner # Runner de Stemdo
+    steps:
+      - name: Imprimir entorno seleccionado # Nombre que se mostrará en la ejecución
+        run: echo "El entorno seleccionado es ${{ inputs.environment }}" 
+        # Comando que imprime el entorno elegido

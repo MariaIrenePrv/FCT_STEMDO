@@ -1,0 +1,32 @@
+## Despliego 3 réplicas
+replicaCount: 3
+
+## Modifico a la versión 1.26.1-debian-12-r0
+image:
+  registry: docker.io
+  repository: bitnami/nginx
+  tag: 1.26.1-debian-12-r0
+  digest: ""
+
+## La estrategia de actualización pasa a ser Recreate, además especifico que rollingUpdate debe ser null ya que al actualizar el chart se creaba un conflicto. 
+updateStrategy:
+  type: Recreate
+  rollingUpdate: null
+
+## Desactivo livenessProbe
+livenessProbe:
+  enabled: false
+
+## Desactivo readinessProbe
+readinessProbe:
+  enabled: false
+
+## Cambio el puerto de http a 8081
+service:
+  ports:
+    http: 8081
+
+## Habilito un ingress con el host prueba.nginx
+ingress:
+  Enabled: true
+  hostname: prueba.nginx

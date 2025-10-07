@@ -1,0 +1,25 @@
+# Nombre del workflow
+name: Workflow reutilizable despliegues
+
+# Este workflow puede ser llamado por otros workflows
+on:
+  workflow_call:
+
+# Jobs a ejecutar
+jobs:
+  val_rama:
+    runs-on: MIP  # Mi Runner
+    steps:
+      - name: Mostrar rama 
+        run: |
+          echo "Rama actual: $GITHUB_REF_NAME"
+
+      - name: Validar y ejecutar según la rama
+        run: |
+          echo "Rama actual: $GITHUB_REF_NAME"
+          if [[ "$GITHUB_REF_NAME" == feature/* ]]; then
+            echo "La rama comienza por feature/"
+            echo "Ejecutando tarea principal..."
+          else
+            exit 1
+          fi

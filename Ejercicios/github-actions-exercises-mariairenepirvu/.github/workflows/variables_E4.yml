@@ -1,0 +1,52 @@
+# Nombre del workflow
+name: Variables y Outputs 
+
+# Evento para lanzar el Workflow manualmente
+on:
+  workflow_dispatch:
+
+env:
+  arch: config.json  # Nombre del archivo como variable de entorno
+
+# Jobs a ejecutar
+jobs:
+  var_out:
+    runs-on: labs-runner # Runner de Stemdo
+    steps:
+      - name: Checkout del repositorio # Acción oficial que clona el repositorio en el runner
+        uses: actions/checkout@v4
+
+        # Comprobación existencia del archivo y formato válido con jq.
+      - name: Verificación archivo config.json
+        run: |
+          if [[ ! -f "$arch" ]]; then
+            echo "El archivo $arch no existe"
+            exit 1
+          else 
+            echo "El archivo existe"
+          fi
+          if jq empty "$arch" > /dev/null 2>&1; then 
+            echo "El archivo tiene un formato válido" 
+          else 
+            echo "El archivo no tiene el formato válido"
+            exit 1
+          fi
+        # Muestro por pantalla la versión del archivo según config.json
+      - name: Extraigo la versión del archivo
+        id: version_app
+        run: |
+          ver=$(jq -r '.version' "$arch")
+          echo "La versión es $ver"
+          echo "version=$ver" >> "$GITHUB_OUTPUT"
+        # Simulación de despliegue según la rama en la que se realice el push. Variable GITHUB_REF para comprobar en que rama se hizo el push. 
+      - name: Despliegue según rama
+        run: |
+          echo "Versión a desplegar: ${{ env.version }}"  # Usamos la variable de entorno 'version'
+
+          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+            echo "Simulando despliegue en producción..."
+          elif [[ "${GITHUB_REF}" == "refs/heads/mip_git_actions" ]]; then
+            echo "Simulando despliegue en develop..."
+          else
+            echo "Tienes que seleccionar la rama main o la personal"
+          fi

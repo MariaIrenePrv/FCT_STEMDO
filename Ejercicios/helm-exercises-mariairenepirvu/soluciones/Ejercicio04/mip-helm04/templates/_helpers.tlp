@@ -1,0 +1,12 @@
+{{- define "mip-helm04.fullname" -}}
+{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "mip-helm04.labels" -}}
+app.kubernetes.io/name: {{ include "mip-helm04.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{- define "mip-helm04.name" -}}
+{{ .Chart.Name }}
+{{- end }}

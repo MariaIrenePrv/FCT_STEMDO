@@ -1,0 +1,26 @@
+# Nombre del workflow
+name: Context Pull_request
+
+on:
+  pull_request:
+    types: [opened]  # El workflow solo se ejecuta cuando se crea un nuevo Pull Request
+
+# Jobs a ejecutar
+jobs:
+  context_pull:
+    runs-on: labs-runner # Runner de Stemdo
+    steps:
+      - name: Verificación urgent
+        # Condición, si existe un título con el termino "urgent" te imprime el título completo y su cuerpo. Si no, la ejecución falla. 
+        run: |
+            titulo="${{ github.event.pull_request.title }}"
+            titulo_min=$(echo "$titulo" | tr '[:upper:]' '[:lower:]')
+
+            if [[ "$titulo_min" =~ urgent ]]; then
+              echo "Título: $titulo"
+              echo "Cuerpo: ${{ github.event.pull_request.body }}"
+            else
+              exit 1
+            fi
+
+        

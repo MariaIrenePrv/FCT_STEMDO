@@ -1,0 +1,20 @@
+# Nombre del workflow
+name: Info Runner
+
+# Evento para lanzar el Workflow manualmente
+on:
+  workflow_dispatch:
+
+# Jobs a ejecutar
+jobs:
+  info_runner:
+    runs-on: labs-runner # Runner de Stemdo
+    steps:
+      - name: Información sobre el Runner
+        # Imprimo el nombre, sistema operativo, arquitectura y espacio de disco (por comandos). 
+        run: |
+          echo "Runner en el que se está ejecutando: ${{ runner.name }}"
+          echo "Sistema operativo: ${{ runner.os }}"
+          echo "Arquitectura: ${{ runner.arch }}"
+          echo "Espacio en disco disponible:"
+          df -h

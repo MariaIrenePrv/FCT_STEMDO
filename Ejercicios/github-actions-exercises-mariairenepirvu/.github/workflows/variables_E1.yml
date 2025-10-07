@@ -1,0 +1,18 @@
+# Nombre del workflow
+name: Dos variables de entorno 
+
+# Evento para lanzar el Workflow manualmente
+on:
+  workflow_dispatch:
+
+jobs:
+  tareas:
+    runs-on: labs-runner # Runner de Stemdo
+    steps:
+      - name: Creación dos variables de entorno
+        run: | 
+            echo "Hello=Hola desde Stemdo" >> $GITHUB_ENV
+            echo "Nombre=MªIrene" >> $GITHUB_ENV
+      - name: Muestro las variables 
+        run: 
+            echo "$Hello, mi nombre es $Nombre"

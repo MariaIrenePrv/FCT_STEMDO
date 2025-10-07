@@ -1,0 +1,17 @@
+# Nombre del workflow
+name: Workflow reutilizable que imprime mensaje 
+
+# Este workflow puede ser llamado por otros workflows
+on:
+  workflow_call:
+
+# Jobs a ejecutar
+jobs:
+  imp_mensaje:
+    runs-on: MIP  # Mi Runner
+    steps:
+      - name: Imprimo mensaje
+        run: echo " Este mensaje le pertenece a Reusable 1"
+  
+
+  

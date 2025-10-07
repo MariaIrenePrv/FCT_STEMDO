@@ -1,0 +1,14 @@
+# Nombre del workflow
+name: Llama al workflow reutilizable 2
+
+# Evento para lanzar el Workflow manualmente
+on:
+  workflow_dispatch:
+
+# Jobs a ejecutar
+jobs:
+  llamar_reusable:
+    uses: ./.github/workflows/reusable_E2.yml 
+  
+
+  

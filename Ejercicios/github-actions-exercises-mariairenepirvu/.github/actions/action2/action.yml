@@ -1,0 +1,13 @@
+# Nombre del action
+name: "Mostrar autor del último commit"
+description: "Imprime el nombre del autor del último commit"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Obtener autor último commit
+      shell: bash
+    # Haciendo uso de contexts saco el autor del último commit y lo muestro por pantalla
+      run: |
+        autor=${{ github.event.head_commit.author.name }}
+        echo "El autor del último commit es: $autor"

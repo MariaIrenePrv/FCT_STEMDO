@@ -1,0 +1,25 @@
+- name: Asegurarse de que UFW esté instalado
+  apt:
+    name: ufw
+    state: present
+
+- name: Denegar todo el tráfico entrante por defecto
+  ufw:
+    default: deny
+    direction: incoming
+
+- name: Permitir acceso desde backend a PostgreSQL
+  ufw:
+    rule: allow
+    from_ip: "{{ backend_ip }}"
+    to_port: 5432
+    proto: tcp
+
+- name: Permitir acceso SSH para Ansible
+  ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: Habilitar UFW
+  ufw:
+    state: enabled

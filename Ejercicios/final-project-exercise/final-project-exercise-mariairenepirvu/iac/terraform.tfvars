@@ -1,0 +1,5 @@
+resource_group  = "rg-mipirvu-dvfinlab"
+admin_username  = "azure-admin"
+admin_password  = "1234"
+name            = "irene"
+acr_name        = "stamipirvudvfinlab"

@@ -1,0 +1,12 @@
+name: "Crear Archivo"
+description: "Archivo de texto con mensaje"
+inputs:
+  mensaje:
+    description: "Mensaje archivo"
+    required: true
+runs:
+  using: "composite"
+  steps: 
+    - name: Creación archivo 
+      shell: bash
+      run: echo "${{ inputs.mensaje }}" > mensaje.txt 

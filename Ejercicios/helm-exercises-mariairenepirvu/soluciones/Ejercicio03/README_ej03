@@ -1,0 +1,74 @@
+# **Ejercicio 03: Desplegando Nginx en Kubernetes con Helm**
+
+Despliego el chart `bitnami/nginx`, configurando todos los elementos necesarios a través de un archivo `values.yaml`.
+
+### Requisitos del despliegue:
+
+1. **Descargar e instalar** 
+   Descargo e instalo el chart con el siguiente comando:
+   ```bash
+   helm repo list
+   helm install mip-nginx bitnami/nginx --version 20.0.2
+   ```
+   <img src="../../auxiliar/ej3.png">
+
+2. **Crear un archivo `values.yaml`** 
+   - Imagen por defecto con versión `1.26.1-debian-12-r0`.
+   - Desplegar 3 réplicas.
+   - `Recreate` como estrategia de actualización.
+   - Desactivar `livenessProbe` y `readinessProbe`.
+   - Cambiar el puerto HTTP del servicio al `8081`.
+   - Habilitar la creación de un ingress, con el host en `prueba.nginx`.
+
+    ```yaml
+    ## Despliego 3 réplicas
+    replicaCount: 3
+
+    ## Modifico a la versión 1.26.1-debian-12-r0
+    image:
+    registry: docker.io
+    repository: bitnami/nginx
+    tag: 1.26.1-debian-12-r0
+    digest: ""
+
+    ## La estrategia de actualización pasa a ser Recreate, además especifico que rollingUpdate debe ser null ya que al actualizar el chart se creaba un conflicto. 
+    updateStrategy:
+    type: Recreate
+    rollingUpdate: null
+
+    ## Desactivo livenessProbe
+    livenessProbe:
+    enabled: false
+
+    ## Desactivo readinessProbe
+    readinessProbe:
+    enabled: false
+
+    ## Cambio el puerto de http a 8081
+    service:
+    ports:
+        http: 8081
+
+    ## Habilito un ingress con el host prueba.nginx
+    ingress:
+    Enabled: true
+    hostname: prueba.nginx
+
+    ```
+
+3. **Actualizar** 
+   
+   Actualizo el chart dentro de la carpeta en la que se encuentra la configuración nueva (values.yaml)
+    ```bash
+    helm upgrade mip-nginx bitnami/nginx -f values.yaml
+    ```
+   <img src="../../auxiliar/ej3.1.png">
+
+4. **Verificar** 
+ 
+    Verifico el correcto lanzamiento con los nuevos valores. 
+    ```bash
+    kubectl get deployment mip-nginx
+    ```
+
+   <img src="../../auxiliar/ej3.2.png">

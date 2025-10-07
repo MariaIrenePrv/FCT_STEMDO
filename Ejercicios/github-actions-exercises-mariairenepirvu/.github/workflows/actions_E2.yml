@@ -1,0 +1,20 @@
+# Nombre del workflow
+name: Mostrar Autor del Commit
+
+# Evento para lanzar el Workflow manualmente
+on:
+  push:
+    branches:
+      - main
+
+# Jobs a ejecutar
+jobs:
+  mostrar-autor:
+    runs-on: ubuntu-latest  # Runner de Ubuntu
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+
+      - name: Ejecutar action personalizada
+        uses: ./.github/actions/action2

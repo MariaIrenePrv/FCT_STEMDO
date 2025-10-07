@@ -1,0 +1,18 @@
+# Nombre del workflow
+name: Mensaje al hacer un Push en la rama mip_git_actions
+
+# Evento que lanza el workflow automáticamente al hacer push en una rama específica
+on:
+  push:
+    branches:
+      - mip_git_actions  # Solo se ejecuta si el push se da en la rama "mip_git_actions"
+
+# Job a ejecutar
+jobs:
+  hola:
+    runs-on: labs-runner  # Runner de Stemdo
+
+    steps:
+      - name: Hola, Mundo  # Nombre del paso que se verá en GitHub Actions
+        run: echo "¡Hello, World!"  
+        # Imprime un saludo

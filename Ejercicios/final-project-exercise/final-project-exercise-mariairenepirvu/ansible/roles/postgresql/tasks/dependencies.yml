@@ -1,0 +1,10 @@
+- name: Instalar dependencias previas
+  apt:
+    name:
+      - wget
+      - curl
+      - gnupg2
+      - lsb-release
+      - ca-certificates
+    state: present
+    update_cache: yes

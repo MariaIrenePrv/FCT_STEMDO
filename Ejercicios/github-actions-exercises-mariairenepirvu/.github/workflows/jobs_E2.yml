@@ -1,0 +1,36 @@
+# Nombre del workflow
+name: Dos jobs
+
+# Evento para lanzar el Workflow manualmente
+on:
+  workflow_dispatch:
+    inputs:
+        opciones_build:
+            description: '¿Deseas que job build tenga éxito?' 
+            required: true
+            default: 'Sí'
+            type: choice
+            options:
+            - 'Sí'
+            - 'No'
+
+# Jobs a ejecutar
+jobs:
+    job_build:
+        runs-on: labs-runner # Runner de Stemdo
+        steps:
+          - name: Script de éxito o fallo en job_build
+            run: |
+                if [ "${{ github.event.inputs.opciones_build }}" == "No" ]; then
+                    echo "¡Error! Algo salió mal en el job build."
+                    exit 1  # Simula un fallo real
+                else
+                    echo "¡El job build funciona correctamente!"
+                    exit 0  # Éxito
+                fi
+    job_deploy:
+        needs: job_build # Depende de job_build
+        runs-on: labs-runner # Runner de Stemdo
+        steps:
+          - name: Mensaje consola   
+            run: echo "Hola, soy job_deploy"

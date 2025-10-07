@@ -1,0 +1,22 @@
+# Nombre del workflow
+name: Context Secreto 
+
+# Evento para lanzar el Workflow manualmente
+on:
+  workflow_dispatch:
+
+# Jobs a ejecutar
+jobs:
+  context_secret:
+    runs-on: labs-runner # Runner de Stemdo
+    steps:
+      - name: Simulación de despliegue
+        # Realizamos una simulación comprobando la rama con GITHUB_REF y utilizando secrets.<secret_name>
+        run: |
+          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+            echo "Simulando despliegue en producción..."
+            echo "Usando API Key: ${{ secrets.PROD_API_KEY }}"
+          else
+            echo "Simulando despliegue en staging..."
+            echo "Usando API Key: ${{ secrets.STAGING_API_KEY }}"
+          fi

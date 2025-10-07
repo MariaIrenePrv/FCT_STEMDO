@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demogat-yaml # Nombre del deployment
+spec:
+  replicas: 7 # Número de replicas 
+  selector:
+    matchLabels:
+      app: gato
+  template: # Plantilla para el pod
+    metadata:
+      labels:
+        app: gato # Etiqueta para identificar el pod 
+
+    spec:  
+      containers:
+      - name: tomcat # Nombre del contenedor 
+        image: tomcat:11.0.0-M20
